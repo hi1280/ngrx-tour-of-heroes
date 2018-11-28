@@ -4,7 +4,7 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectHeroes } from '../reducers';
-import { HeroesRequested } from '../hero.actions';
+import { HeroesRequestedHeroes } from '../hero.actions';
 
 @Component({
   selector: 'app-heroes',
@@ -21,7 +21,7 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.store.dispatch(new HeroesRequested());
+    this.store.dispatch(new HeroesRequestedHeroes());
     this.store.pipe(
       select(selectHeroes)
     )

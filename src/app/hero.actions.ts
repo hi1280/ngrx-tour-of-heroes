@@ -2,13 +2,23 @@ import { Action } from '@ngrx/store';
 import { Hero } from './hero';
 
 export enum HeroActionTypes {
-  HeroesRequested = '[Dashboard Page] Heroes Requested',
-  HeroesLoaded = '[Heroes API] Heroes Loaded'
+  HeroesRequestedDashboard = '[Dashboard Page] Heroes Requested',
+  HeroesRequestedHeroes = '[Heroes Page] Heroes Requested',
+  HeroesLoaded = '[Heroes API] Heroes Loaded',
+  HeroRequested = '[Hero Page] Hero Requested',
+  HeroLoaded = '[Hero API] Hero Loaded',
+  HeroAdded = '[Hero API] Hero Added',
+  HeroUpdated = '[Hero API] Hero Updated',
+  HeroDeleted = '[Hero API] Hero Deleted',
+  HeroSucceeded = '[Hero API] Hero Succeeded',
 }
 
-export class HeroesRequested implements Action {
-  readonly type = HeroActionTypes.HeroesRequested;
-  
+export class HeroesRequestedDashboard implements Action {
+  readonly type = HeroActionTypes.HeroesRequestedDashboard;
+}
+
+export class HeroesRequestedHeroes implements Action {
+  readonly type = HeroActionTypes.HeroesRequestedHeroes;
 }
 
 export class HeroesLoaded implements Action {
@@ -16,6 +26,19 @@ export class HeroesLoaded implements Action {
   constructor(public payload: {heroes: Hero[]}){}
 }
 
+export class HeroRequested implements Action {
+  readonly type = HeroActionTypes.HeroRequested;
+  constructor(public payload: {id: number}){}
+}
+
+export class HeroLoaded implements Action {
+  readonly type = HeroActionTypes.HeroLoaded;
+  constructor(public payload: {hero: Hero}){}
+}
+
 export type HeroActions = 
-  HeroesRequested
-  | HeroesLoaded;
+  HeroesRequestedDashboard
+  | HeroesLoaded
+  | HeroesRequestedHeroes
+  | HeroRequested
+  | HeroLoaded;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Hero } from '../hero';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectHeroes } from '../reducers';
-import { HeroesRequested } from '../hero.actions';
+import { HeroesRequestedDashboard } from '../hero.actions';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getHeroes(): void {
-    this.store.dispatch(new HeroesRequested());
+    this.store.dispatch(new HeroesRequestedDashboard());
 
     this.store.pipe(
       select(selectHeroes)
