@@ -26,12 +26,12 @@ export const initialHeroState: HeroState = adapter.getInitialState();
 export function heroesReducer(state = initialHeroState, action: HeroActions): HeroState {
   switch (action.type) {
     case HeroActionTypes.HeroesLoaded:
-      return adapter.addAll(action.payload.heroes, {...state})
+      return adapter.addAll(action.payload.heroes, {...state});
     case HeroActionTypes.HeroLoaded:
+    case HeroActionTypes.HeroSucceeded:
       return adapter.addOne(action.payload.hero, state);
     default:
       return state;
-
   }
 }
 

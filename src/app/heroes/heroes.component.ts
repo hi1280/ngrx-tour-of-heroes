@@ -4,7 +4,7 @@ import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { Store, select } from '@ngrx/store';
 import { AppState, selectHeroes } from '../reducers';
-import { HeroesRequestedHeroes } from '../hero.actions';
+import { HeroesRequestedHeroes, HeroAdded } from '../hero.actions';
 
 @Component({
   selector: 'app-heroes',
@@ -31,10 +31,16 @@ export class HeroesComponent implements OnInit {
   add(name: string): void {
     name = name.trim();
     if (!name) { return; }
-    this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => {
-        this.heroes.push(hero);
-      });
+    this.store.dispatch(new HeroAdded({hero: {name} as Hero}));
+    this.store.pipe(
+      select(selectHeroes)
+    )
+    .subscribe(heroes => this.heroes = heroes);
+
+    // this.heroService.addHero({ name } as Hero)
+    //   .subscribe(hero => {
+    //     this.heroes.push(hero);
+    //   });
   }
 
   delete(hero: Hero): void {

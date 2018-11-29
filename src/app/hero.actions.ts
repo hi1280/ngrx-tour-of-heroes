@@ -36,9 +36,21 @@ export class HeroLoaded implements Action {
   constructor(public payload: {hero: Hero}){}
 }
 
+export class HeroAdded implements Action {
+  readonly type = HeroActionTypes.HeroAdded;
+  constructor(public payload: {hero: Hero}){}
+}
+
+export class HeroSucceeded implements Action {
+  readonly type = HeroActionTypes.HeroSucceeded;
+  constructor(public payload: {hero: Hero}){}
+}
+
 export type HeroActions = 
   HeroesRequestedDashboard
   | HeroesLoaded
   | HeroesRequestedHeroes
   | HeroRequested
-  | HeroLoaded;
+  | HeroLoaded
+  | HeroAdded
+  | HeroSucceeded;
