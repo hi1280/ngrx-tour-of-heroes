@@ -8,6 +8,9 @@ import {
 
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
+import { Store, select } from '@ngrx/store';
+import { AppState, selectHeroes, selectSearchedHeroes } from '../reducers';
+import { HeroesSearchRequested } from '../hero.actions';
 
 @Component({
   selector: 'app-hero-search',
@@ -18,7 +21,7 @@ export class HeroSearchComponent implements OnInit {
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
 
-  constructor(private heroService: HeroService) {}
+  constructor(private heroService: HeroService,private store: Store<AppState>) {}
 
   // Push a search term into the observable stream.
   search(term: string): void {
@@ -34,7 +37,12 @@ export class HeroSearchComponent implements OnInit {
       distinctUntilChanged(),
 
       // switch to new search observable each time the term changes
-      switchMap((term: string) => this.heroService.searchHeroes(term)),
+      switchMap((term: string) => {
+        this.store.dispatch(new HeroesSearchRequested({term}));
+        return this.store.pipe(
+          select(selectSearchedHeroes)
+        )
+      }),
     );
   }
 }

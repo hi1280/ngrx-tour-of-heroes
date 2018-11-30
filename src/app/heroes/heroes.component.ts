@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
+import { select, Store } from '@ngrx/store';
 import { Hero } from '../hero';
+import { HeroAdded, HeroDeleted, HeroesRequestedHeroes } from '../hero.actions';
 import { HeroService } from '../hero.service';
-import { Store, select } from '@ngrx/store';
 import { AppState, selectHeroes } from '../reducers';
-import { HeroesRequestedHeroes, HeroAdded } from '../hero.actions';
+
 
 @Component({
   selector: 'app-heroes',
@@ -36,16 +36,11 @@ export class HeroesComponent implements OnInit {
       select(selectHeroes)
     )
     .subscribe(heroes => this.heroes = heroes);
-
-    // this.heroService.addHero({ name } as Hero)
-    //   .subscribe(hero => {
-    //     this.heroes.push(hero);
-    //   });
   }
 
   delete(hero: Hero): void {
     this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroService.deleteHero(hero).subscribe();
+    this.store.dispatch(new HeroDeleted({hero}));
   }
 
 }

@@ -1,12 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { Hero }         from '../hero';
-import { HeroService }  from '../hero.service';
-import { Store, select } from '@ngrx/store';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Update } from '@ngrx/entity';
+import { select, Store } from '@ngrx/store';
+import { Hero } from '../hero';
+import { HeroRequested, HeroUpdated } from '../hero.actions';
+import { HeroService } from '../hero.service';
 import { AppState, selectHeroesById } from '../reducers';
-import { HeroRequested } from '../hero.actions';
+
 
 @Component({
   selector: 'app-hero-detail',
@@ -18,14 +19,13 @@ export class HeroDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private heroService: HeroService,
     private location: Location,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private heroService: HeroService
   ) {}
 
   ngOnInit(): void {
     this.getHero();
-    
   }
 
   getHero(): void {
@@ -33,15 +33,21 @@ export class HeroDetailComponent implements OnInit {
     this.store.dispatch(new HeroRequested({id}));
     this.store.pipe(
       select(selectHeroesById(id))
-    ).subscribe(hero => this.hero = hero);
+    ).subscribe(hero => {
+      this.hero = {...hero}
+    });
   }
 
   goBack(): void {
     this.location.back();
   }
 
- save(): void {
-    this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
+  save(): void {
+    const hero: Update<Hero> = {
+      id: this.hero.id,
+      changes: this.hero
+    }
+    this.store.dispatch(new HeroUpdated({hero}));
+    this.goBack()
   }
 }

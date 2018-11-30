@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { Action } from '@ngrx/store';
 import { Hero } from './hero';
 
@@ -6,11 +7,13 @@ export enum HeroActionTypes {
   HeroesRequestedHeroes = '[Heroes Page] Heroes Requested',
   HeroesLoaded = '[Heroes API] Heroes Loaded',
   HeroRequested = '[Hero Page] Hero Requested',
-  HeroLoaded = '[Hero API] Hero Loaded',
-  HeroAdded = '[Hero API] Hero Added',
-  HeroUpdated = '[Hero API] Hero Updated',
-  HeroDeleted = '[Hero API] Hero Deleted',
-  HeroSucceeded = '[Hero API] Hero Succeeded',
+  HeroLoaded = '[Heroes API] Hero Loaded',
+  HeroAdded = '[Heroes Page] Hero Added',
+  HeroUpdated = '[Hero Detail Page] Hero Updated',
+  HeroDeleted = '[Heroes Page] Hero Deleted',
+  HeroAddedSuccess= '[Heroes API] Hero Added Success',
+  HeroesSearchRequested = '[Hero Search Page] Heroes Search Requested',
+  HeroesSearchLoaded = '[Heroes API] Heroes Search Loaded'
 }
 
 export class HeroesRequestedDashboard implements Action {
@@ -41,16 +44,40 @@ export class HeroAdded implements Action {
   constructor(public payload: {hero: Hero}){}
 }
 
-export class HeroSucceeded implements Action {
-  readonly type = HeroActionTypes.HeroSucceeded;
+export class HeroAddedSuccess implements Action {
+  readonly type = HeroActionTypes.HeroAddedSuccess;
   constructor(public payload: {hero: Hero}){}
+}
+
+export class HeroUpdated implements Action {
+  readonly type = HeroActionTypes.HeroUpdated;
+  constructor(public payload: {hero: Update<Hero>}){}
+}
+
+export class HeroDeleted implements Action {
+  readonly type = HeroActionTypes.HeroDeleted;
+  constructor(public payload: {hero: Hero}){}
+}
+
+export class HeroesSearchRequested implements Action {
+  readonly type = HeroActionTypes.HeroesSearchRequested;
+  constructor(public payload: {term: string}){}
+}
+
+export class HeroesSearchLoaded implements Action {
+  readonly type = HeroActionTypes.HeroesSearchLoaded;
+  constructor(public payload: {heroes: Hero[]}){}
 }
 
 export type HeroActions = 
   HeroesRequestedDashboard
-  | HeroesLoaded
   | HeroesRequestedHeroes
+  | HeroesLoaded
   | HeroRequested
   | HeroLoaded
   | HeroAdded
-  | HeroSucceeded;
+  | HeroAddedSuccess
+  | HeroUpdated
+  | HeroDeleted
+  | HeroesSearchRequested
+  | HeroesSearchLoaded;
