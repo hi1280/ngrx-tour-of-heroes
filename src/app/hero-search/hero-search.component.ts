@@ -9,7 +9,7 @@ import {
 import { Hero } from '../hero';
 import { HeroService } from '../hero.service';
 import { Store, select } from '@ngrx/store';
-import { AppState, selectHeroes, selectSearchedHeroes } from '../reducers';
+import { AppState, selectSearchedHeroes } from '../reducers';
 import { HeroesSearchRequested } from '../hero.actions';
 
 @Component({

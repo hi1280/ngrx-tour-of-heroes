@@ -13,7 +13,7 @@ export class HeroEffects {
     ofType(
       HeroActionTypes.HeroesRequestedDashboard
       ,HeroActionTypes.HeroesRequestedHeroes),
-    mergeMap(action => this.heroService.getHeroes()),
+    mergeMap(() => this.heroService.getHeroes()),
     map(heroes => new HeroesLoaded({heroes}))
   );
 

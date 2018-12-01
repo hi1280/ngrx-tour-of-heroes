@@ -5,7 +5,6 @@ import { Update } from '@ngrx/entity';
 import { select, Store } from '@ngrx/store';
 import { Hero } from '../hero';
 import { HeroRequested, HeroUpdated } from '../hero.actions';
-import { HeroService } from '../hero.service';
 import { AppState, selectHeroesById } from '../reducers';
 
 
@@ -21,7 +20,6 @@ export class HeroDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private store: Store<AppState>,
-    private heroService: HeroService
   ) {}
 
   ngOnInit(): void {

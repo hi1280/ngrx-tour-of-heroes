@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Hero } from '../hero';
 import { HeroAdded, HeroDeleted, HeroesRequestedHeroes } from '../hero.actions';
-import { HeroService } from '../hero.service';
 import { AppState, selectHeroes } from '../reducers';
 
 
@@ -14,7 +13,7 @@ import { AppState, selectHeroes } from '../reducers';
 export class HeroesComponent implements OnInit {
   heroes: Hero[];
 
-  constructor(private heroService: HeroService, private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
     this.getHeroes();
